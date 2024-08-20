@@ -3,10 +3,10 @@ package com.smartbank.transactionservice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartbank.accountservice.repository.CustomerRepository;
 import com.smartbank.transactionservice.entity.Customer;
 import com.smartbank.transactionservice.exception.ExceptionCode;
 import com.smartbank.transactionservice.exception.TxnException;
+import com.smartbank.transactionservice.repository.CustomerRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,7 +25,7 @@ public class AuthzServiceImpl implements AuthzService {
 	public boolean validateAccess(String tokenSubject, String accountNumber) throws TxnException {
 		final String methodName = "validateAccess";
 		Customer customer = customerRepository.findByCustomerId(Long.parseLong(tokenSubject)).orElseThrow(
-		 () -> new AccsException(ExceptionCode.ACC_AUTHZ_ERROR)		
+		 () -> new TxnException(ExceptionCode.ACC_AUTHZ_ERROR)		
 		);
 		
 		boolean result = customer.getAccount().stream().anyMatch(acc -> acc.getAccountNumber().equals(accountNumber));
