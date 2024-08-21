@@ -25,7 +25,7 @@ public class ErrorStackTrace implements Serializable {
 	
 	
 	public ErrorStackTrace(Throwable th) {
-		this.exceptionCode = ExceptionCode.ACCS_UNKNOWN_EXCEPTION;
+		this.exceptionCode = ExceptionCode.TXNS_UNKNOWN_EXCEPTION;
 		for(Throwable exception = th; exception!=null;exception=exception.getCause()) {
 			this.errors.add(exception.getMessage());
 		}

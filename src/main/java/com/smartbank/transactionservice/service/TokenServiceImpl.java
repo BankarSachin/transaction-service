@@ -37,15 +37,15 @@ public class TokenServiceImpl implements TokenService{
 		try {
             return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
-            throw new TxnException(ExceptionCode.ACCS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_EXPIRED_ERROR.getMessage()});
+            throw new TxnException(ExceptionCode.TXNS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_EXPIRED_ERROR.getMessage()});
         } catch (UnsupportedJwtException e) {
-        	 throw new TxnException(ExceptionCode.ACCS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_UNSUPPORTED_ERROR.getMessage()});
+        	 throw new TxnException(ExceptionCode.TXNS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_UNSUPPORTED_ERROR.getMessage()});
         } catch (MalformedJwtException e) {
-        	 throw new TxnException(ExceptionCode.ACCS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_MALFORMED_ERROR.getMessage()});
+        	 throw new TxnException(ExceptionCode.TXNS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_MALFORMED_ERROR.getMessage()});
         } catch (SignatureException e) {
-        	 throw new TxnException(ExceptionCode.ACCS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_INVALID_ERROR.getMessage()});
+        	 throw new TxnException(ExceptionCode.TXNS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_INVALID_ERROR.getMessage()});
         } catch (IllegalArgumentException e) {
-        	 throw new TxnException(ExceptionCode.ACCS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_EMPTY_ERROR.getMessage()});
+        	 throw new TxnException(ExceptionCode.TXNS_JWT_ERROR,new String[] {ApiMessages.JWT_TOKEN_EMPTY_ERROR.getMessage()});
         }
 	}
 
@@ -65,7 +65,7 @@ public class TokenServiceImpl implements TokenService{
 	          return new TokenResponse(token);
 		} catch (Exception e) {
 			log.error("{} - Unknown error while generting token {}",methodName,e.getMessage());
-			throw new TxnException(ExceptionCode.ACCS_UNKNOWN_EXCEPTION, e);
+			throw new TxnException(ExceptionCode.TXNS_UNKNOWN_EXCEPTION, e);
 		}
 	}
 }

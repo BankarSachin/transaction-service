@@ -44,7 +44,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		List<String> errors = new ArrayList<>();
-		ExceptionCode exceptionCode = ExceptionCode.ACCS_INVALID_INPUT;
+		ExceptionCode exceptionCode = ExceptionCode.TXNS_INVALID_INPUT;
 		
 		for(FieldError error : ex.getBindingResult().getFieldErrors()) {
 			errors.add(error.getField() + ":"+ error.getDefaultMessage());
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(
 			HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 		List<String> errors = new ArrayList<>();
-		ExceptionCode exceptionCode = ExceptionCode.ACCS_INVALID_INPUT;
+		ExceptionCode exceptionCode = ExceptionCode.TXNS_INVALID_INPUT;
 		errors.add(ex.getMessage());
 		final String requestCorelationId = request.getHeader(SysConstant.SYS_REQ_CORR_ID_HEADER);
 		
@@ -111,7 +111,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		List<String> causes = new ArrayList<>();
 		List<ErrorStack> errorStacks = new ArrayList<>();
 		
-		ExceptionCode exceptionCode = ExceptionCode.ACCS_BAD_CREDENTIALS;
+		ExceptionCode exceptionCode = ExceptionCode.TXNS_BAD_CREDENTIALS;
 		
 		ErrorStackTrace stackTrace = new ErrorStackTrace(ex);
 		causes.add(exceptionCode.getMessage());
@@ -134,7 +134,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 		List<String> causes = new ArrayList<>();
 		List<ErrorStack> errorStacks = new ArrayList<>();
 		
-		ExceptionCode exceptionCode = ExceptionCode.ACCS_UNKNOWN_EXCEPTION;
+		ExceptionCode exceptionCode = ExceptionCode.TXNS_UNKNOWN_EXCEPTION;
 		
 		ErrorStackTrace stackTrace = new ErrorStackTrace(ex);
 		causes.add(exceptionCode.getMessage());

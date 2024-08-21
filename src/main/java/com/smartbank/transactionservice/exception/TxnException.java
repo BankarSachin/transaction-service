@@ -19,8 +19,8 @@ public class TxnException extends Exception{
 	private final ErrorStackTrace errorStackTrace;
 	
 	public TxnException() {
-		super(ExceptionCode.ACCS_UNKNOWN_EXCEPTION.toString());
-		this.exceptionCode = ExceptionCode.ACCS_UNKNOWN_EXCEPTION;
+		super(ExceptionCode.TXNS_UNKNOWN_EXCEPTION.toString());
+		this.exceptionCode = ExceptionCode.TXNS_UNKNOWN_EXCEPTION;
 		this.codeArgs = new String[0];
 		this.errorStackTrace = new ErrorStackTrace(this);
 	}

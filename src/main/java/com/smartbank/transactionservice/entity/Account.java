@@ -35,6 +35,6 @@ public class Account {
 	            updatable = false)
 	private Customer customer;
 	
-	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Transaction> transactions;
+	@OneToMany(mappedBy = "accountNumber", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TransactionEntry> transactions;
 }

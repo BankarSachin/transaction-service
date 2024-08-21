@@ -25,13 +25,13 @@ public class AuthzServiceImpl implements AuthzService {
 	public boolean validateAccess(String tokenSubject, String accountNumber) throws TxnException {
 		final String methodName = "validateAccess";
 		Customer customer = customerRepository.findByCustomerId(Long.parseLong(tokenSubject)).orElseThrow(
-		 () -> new TxnException(ExceptionCode.ACC_AUTHZ_ERROR)		
+		 () -> new TxnException(ExceptionCode.TXNS_AUTHZ_ERROR)		
 		);
 		
 		boolean result = customer.getAccount().stream().anyMatch(acc -> acc.getAccountNumber().equals(accountNumber));
 		if (!result) {
 			log.error("{} - Customer does not own account number {} ", methodName,accountNumber);
-			throw new TxnException(ExceptionCode.ACC_AUTHZ_ERROR);
+			throw new TxnException(ExceptionCode.TXNS_AUTHZ_ERROR);
 		}
 		log.info("{} - Customer owns account number {} ", methodName,accountNumber);
 		return result;

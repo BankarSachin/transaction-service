@@ -80,7 +80,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
              final String permissions = (String) claims.get("permissions");
              
              Optional<String> accountNumberOptional = extractAccountNumberFromPathParams(request);
-             String accountNumber = accountNumberOptional.orElseThrow(()->new TxnException(ExceptionCode.ACCS_INVALID_INPUT));
+             String accountNumber = accountNumberOptional.orElseThrow(()->new TxnException(ExceptionCode.TXNS_INVALID_INPUT));
              accountNumber = sanitizeAccountNumber(accountNumber);
              
              final boolean authz = authzService.validateAccess(customerid, accountNumber);
@@ -104,7 +104,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		String pathInfo = request.getServletPath();
 	    if (pathInfo != null) {
 	        String[] parts = pathInfo.split("/");
-	        int indexOfName = List.of(parts).indexOf("accounts");
+	        int indexOfName = List.of(parts).indexOf("transactions");
 	        if (indexOfName != -1) {
 	            return Optional.of(parts[indexOfName + 1]);
 	        }
@@ -143,7 +143,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		List<String> causes = new ArrayList<>();
 		List<ErrorStack> errorStacks = new ArrayList<>();
 		
-		ExceptionCode exceptionCode = ExceptionCode.ACCS_BAD_CREDENTIALS;
+		ExceptionCode exceptionCode = ExceptionCode.TXNS_BAD_CREDENTIALS;
 		
 		ErrorStackTrace stackTrace = new ErrorStackTrace(txnException);
 		causes.add(exceptionCode.getMessage());
