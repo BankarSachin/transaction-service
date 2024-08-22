@@ -1,6 +1,8 @@
-package com.smartbank.transactionservice.entity;
+package com.smartbank.transactionservice.entity.external;
 
 import java.util.Set;
+
+import com.smartbank.transactionservice.entity.TransactionEntry;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

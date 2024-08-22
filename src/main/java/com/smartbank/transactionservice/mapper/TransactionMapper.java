@@ -6,13 +6,14 @@ import com.smartbank.transactionservice.dto.TransactionRequest;
 import com.smartbank.transactionservice.dto.TransactionResponse;
 import com.smartbank.transactionservice.entity.Transaction;
 import com.smartbank.transactionservice.entity.TransactionEntry;
+import com.smartbank.transactionservice.enums.TransactionStatus;
 
 public class TransactionMapper {
 
 	public static Transaction toEntity(TransactionRequest transactionRequest) {
 		Transaction transaction = new Transaction();
 		transaction.setTransactionDate(transactionRequest.getTransactionDate());
-		transaction.setTransactionStatus(transactionRequest.getTransactionStatus());
+		transaction.setTransactionStatus(transactionRequest.getTransactionStatus()==null ? TransactionStatus.SUCCESS:transactionRequest.getTransactionStatus());
 		transaction.setTransactionSummary(transactionRequest.getTransactionSummary());
 		return transaction;
 	}

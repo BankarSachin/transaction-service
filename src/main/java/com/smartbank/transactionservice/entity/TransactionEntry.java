@@ -22,7 +22,7 @@ public class TransactionEntry {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_entry_id", updatable = false, nullable = false)
     private UUID transactionEntryId;
 

@@ -1,4 +1,4 @@
-package com.smartbank.transactionservice.entity;
+package com.smartbank.transactionservice.entity.external;
 
 import java.util.List;
 

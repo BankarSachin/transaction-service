@@ -3,7 +3,7 @@ package com.smartbank.transactionservice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.smartbank.transactionservice.entity.Customer;
+import com.smartbank.transactionservice.entity.external.Customer;
 import com.smartbank.transactionservice.exception.ExceptionCode;
 import com.smartbank.transactionservice.exception.TxnException;
 import com.smartbank.transactionservice.repository.CustomerRepository;
