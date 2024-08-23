@@ -38,25 +38,17 @@ public class TransactionServiceImpl implements TransactionService{
 	public TransactionResponse entry(String accountNumber, TransactionRequest transactionRequest) throws TxnException {
 		final String methodName = "entry";
 		try {
-				Transaction transaction = null;
-				if (transactionRequest.getUtrNumber()!=null) {
-					 transaction = transactionRepository.findById(transactionRequest.getUtrNumber()).orElseThrow(() -> new TxnException(ExceptionCode.TXNS_INVALID_INPUT));
-				}
-				
-				//Transaction not present. Create one
-				if (transaction == null) {
-					transaction = TransactionMapper.toEntity(transactionRequest);
-				}
+				Transaction transaction = TransactionMapper.toEntity(transactionRequest);;
+				transaction = transactionRepository.save(transaction);
 				
 				TransactionEntry  transactionEntry = TransactionEntryMapper.toEntity(transaction, transactionRequest,accountNumber);
+				
+				transaction.setTransactionEntries(List.of(transactionEntry));
 				
 				transactionEntry = transactionEntryRepository.save(transactionEntry);
 				
 				return TransactionMapper.toResponse(transaction, transactionEntry);
 				
-		} catch (TxnException e) {
-			log.error("{} - Error observerd during transaction entry creation {}", methodName,e.getMessage());
-			throw e;
 		} catch (Exception e) {
 			log.error("{} - Unknown Error observerd during transaction entry creation {}", methodName,e.getMessage());
 			throw new TxnException(ExceptionCode.TXNS_UNKNOWN_EXCEPTION, e);
@@ -69,8 +61,14 @@ public class TransactionServiceImpl implements TransactionService{
 			TransactionType transactionType) throws TxnException {
 		final String methodName = "getTxHistory";
 		try {
-				List<Transaction> transactions =  transactionRepository.findTransactionsByCriteria(accountNumber, startDate, endDate, transactionType.toString());
-				return transactions.stream().map(TransactionMapper.txnResponseMapper :: apply).collect(Collectors.toList());
+				List<Transaction> transactions =  transactionRepository.findTransactionsByCriteria(accountNumber, 
+																								   startDate, 
+																								   endDate, 
+																								   transactionType
+																								  );
+				return transactions.stream()
+						.map(TransactionMapper.txnResponseMapper :: apply)
+						.collect(Collectors.toList());
 		} catch (Exception e) {
 			log.error("{} - Error observerd during transaction history fetch {}", methodName,e.getMessage());
 			throw new TxnException(ExceptionCode.TXNS_UNKNOWN_EXCEPTION, e);

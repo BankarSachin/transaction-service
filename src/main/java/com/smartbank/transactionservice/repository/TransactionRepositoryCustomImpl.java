@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.smartbank.transactionservice.entity.Transaction;
 import com.smartbank.transactionservice.entity.TransactionEntry;
+import com.smartbank.transactionservice.enums.TransactionType;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -28,7 +29,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
      * @param transactionType type of transaction needs to be fetched
      */
     @Override
-    public List<Transaction> findTransactionsByCriteria(String accountNumber, LocalDate startDate, LocalDate endDate, String transactionType) {
+    public List<Transaction> findTransactionsByCriteria(String accountNumber, LocalDate startDate, LocalDate endDate, TransactionType transactionType) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Transaction> cq = cb.createQuery(Transaction.class);
         Root<Transaction> transactionRoot = cq.from(Transaction.class);
@@ -51,7 +52,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         }
 
         // Optional: transaction type
-        if (transactionType != null && !transactionType.isEmpty()) {
+        if (transactionType != null) {
             predicates.add(cb.equal(transactionEntryJoin.get("transactionType"), transactionType));
         }
 

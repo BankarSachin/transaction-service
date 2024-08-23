@@ -7,16 +7,5 @@ package com.smartbank.transactionservice.enums;
  * @author Sachin
  */
 public enum TransactionType {
-	CREDIT("CR"), DEBIT("DR");
-
-	private final String value;
-
-	private TransactionType(String value) {
-		this.value = value;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
+	CREDIT, DEBIT;
 }

@@ -13,7 +13,7 @@ public class TransactionMapper {
 	public static Transaction toEntity(TransactionRequest transactionRequest) {
 		Transaction transaction = new Transaction();
 		transaction.setTransactionDate(transactionRequest.getTransactionDate());
-		transaction.setTransactionStatus(transactionRequest.getTransactionStatus()==null ? TransactionStatus.SUCCESS:transactionRequest.getTransactionStatus());
+		transaction.setTransactionStatus(TransactionStatus.SUCCESS);
 		transaction.setTransactionSummary(transactionRequest.getTransactionSummary());
 		return transaction;
 	}
@@ -26,12 +26,16 @@ public class TransactionMapper {
 		transactionResponse.setTransactionDate(transaction.getTransactionDate());
 		transactionResponse.setTransactionAmount(transactionEntry.getTransactionAmount());
 		transactionResponse.setTransactionAccount(transactionEntry.getAccountNumber());
+		transactionResponse.setClosingBalance(transactionEntry.getClosingBalance());
+		transactionResponse.setTransactionDescription(transaction.getTransactionSummary());
 		return transactionResponse;
 	}
 
 	public static final Function<Transaction, TransactionResponse> txnResponseMapper = t -> {
 		TransactionResponse transactionResponse = new TransactionResponse();
 		transactionResponse.setUtrNumber(t.getUtrNumber());
+		transactionResponse.setTransactionDate(t.getTransactionDate());
+		transactionResponse.setTransactionDescription(t.getTransactionSummary());
 		TransactionEntry transactionEntry = t.getTransactionEntries().get(0);
 		transactionResponse.setTransactionType(transactionEntry.getTransactionType());
 		transactionResponse.setTransactionAccount(transactionEntry.getAccountNumber());

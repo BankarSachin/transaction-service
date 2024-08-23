@@ -63,9 +63,13 @@ public class TransactionController {
 			final @PathVariable(value ="accountnumber",required = true) String accountNumber,
 	        @RequestParam(value = "startDate", required = false) LocalDate startDate,
 	        @RequestParam(value = "endDate", required = false) LocalDate endDate,
-	        @RequestParam(value = "transactionType", required = false) String transactionType
+	        @RequestParam(value = "transactionType", required = false) TransactionType transactionType
 			) throws TxnException{
-		final List<TransactionResponse> txnResponse =  transactionService.getTxHistory(accountNumber, startDate, endDate, TransactionType.valueOf(transactionType));
+		final List<TransactionResponse> txnResponse =  transactionService.getTxHistory(accountNumber, 
+																					   startDate, 
+																					   endDate, 
+																					   transactionType
+																					  );
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(txnResponse);

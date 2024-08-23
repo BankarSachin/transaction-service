@@ -7,6 +7,8 @@ import com.smartbank.transactionservice.enums.TransactionType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,6 +31,7 @@ public class TransactionEntry {
     @Column(name = "utr_number", nullable = false)
     private UUID utrNumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type", nullable = false, length = 2)
     private TransactionType transactionType;
 

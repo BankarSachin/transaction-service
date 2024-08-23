@@ -57,7 +57,7 @@ public class ProjectSecurityConfig {
 					 request -> request
 					 			.requestMatchers(PUBLIC_URLS).permitAll()
 					 			.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-					 			.requestMatchers("/v1/transactions/*/entry").hasAnyAuthority("ADMIN","DEPOSIT_FUNDS","WITHDRAW_FUNDS")
+					 			.requestMatchers("/v1/transactions/*/entry").hasAnyAuthority("ADMIN")
 					 			.requestMatchers("/v1/transactions/*/history").hasAnyAuthority("ADMIN")
 					)
 			.exceptionHandling(exhandler -> exhandler.authenticationEntryPoint(globalAuthenticationEntryPoint))
