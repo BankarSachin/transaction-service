@@ -2,6 +2,7 @@ package com.smartbank.transactionservice.controller;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import com.smartbank.transactionservice.dto.TransferRequest;
 import com.smartbank.transactionservice.enums.TransactionType;
 import com.smartbank.transactionservice.exception.TxnException;
 import com.smartbank.transactionservice.service.TransactionService;
+import com.smartbank.transactionservice.service.TransferService;
 
 import jakarta.validation.Valid;
 
@@ -31,6 +33,8 @@ public class TransactionController {
 	@Autowired
 	private TransactionService transactionService;
 	
+	@Autowired
+	private TransferService transferService;
 	
 	/**
 	 * Make entry of transaction in Transaction DB
@@ -76,9 +80,17 @@ public class TransactionController {
 	}
 	
 	
-	@PostMapping(value="/transactions/transfer",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TransactionResponse> transfer(final @Valid @RequestBody TransferRequest transferRequest) throws TxnException{
-		final TransactionResponse transactionResponse = transactionService.performTransfer(transferRequest);
+	/**
+	 * Transfters Funds from account number in URI to Destination Account Number in body
+	 * @param transferRequest
+	 * @return
+	 * @throws TxnException
+	 */
+	@PostMapping(value="/transactions/{accountnumber}/transfer",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TransactionResponse>> transfer(Map<String, String> headers,
+				final @PathVariable(value = "accountnumber",required = true) String accountNumber,
+				final @Valid @RequestBody TransferRequest transferRequest) throws TxnException{
+		final List<TransactionResponse> transactionResponse = transferService.performTransfer(headers,accountNumber,transferRequest);
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body(transactionResponse);

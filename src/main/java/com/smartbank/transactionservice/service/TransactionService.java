@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.smartbank.transactionservice.dto.TransactionRequest;
 import com.smartbank.transactionservice.dto.TransactionResponse;
-import com.smartbank.transactionservice.dto.TransferRequest;
 import com.smartbank.transactionservice.enums.TransactionType;
 import com.smartbank.transactionservice.exception.TxnException;
 
@@ -29,13 +28,5 @@ public interface TransactionService {
 	 */
 	List<TransactionResponse> getTxHistory(String accountNumber, LocalDate startDate, LocalDate endDate,
 			TransactionType transactionType) throws TxnException;
-	
-	/**
-	 * Perfrom transfer between two accounts
-	 * @param transferRequest
-	 * @return
-	 * @throws TxnException
-	 */
-	TransactionResponse performTransfer(String accountNumber,TransferRequest transferRequest) throws TxnException;
 	
 }

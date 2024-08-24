@@ -11,7 +11,6 @@ import com.smartbank.transactionservice.enums.TransactionStatus;
 public class TransactionMapper {
 
 	public static Transaction toEntity(TransactionRequest transactionRequest) {
-		
 		return Transaction.builder()
 				.transactionDate(transactionRequest.getTransactionDate())
 				.transactionStatus(TransactionStatus.SUCCESS)

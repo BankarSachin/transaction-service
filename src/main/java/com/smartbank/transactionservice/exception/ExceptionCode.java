@@ -71,9 +71,10 @@ public class ExceptionCode implements Serializable{
 	//Server Error Series
 	public static final ExceptionCode TXNS_UNKNOWN_EXCEPTION = new ExceptionCode("TXNS5001", "TXN_UNKNOWN_EXCEPTION", "An unexcepted exception occured",HttpStatus.INTERNAL_SERVER_ERROR);
 	public static final ExceptionCode TXNS_CUSTOMER_NON_EXIST = new ExceptionCode("TXNS5002", "TXN_CUSTOMER_NON_EXIST", "Customer does not exists",HttpStatus.INTERNAL_SERVER_ERROR);
-	public static final ExceptionCode TXNS_DB_EXCEPTION = new ExceptionCode("TXNS5002", "TXN_DB_EXCEPTION", "Database level exception ocurred",HttpStatus.INTERNAL_SERVER_ERROR);
-	
-	
+	public static final ExceptionCode TXNS_DB_EXCEPTION = new ExceptionCode("TXNS5003", "TXN_DB_EXCEPTION", "Database level exception ocurred",HttpStatus.INTERNAL_SERVER_ERROR);
+	public static final ExceptionCode TXNS_NTFS_SERVICE_EMPTY_RESPONSE = new ExceptionCode("TXNS5004", "TXNS_NTFS_SERVICE_EMPTY_RESPONSE", "Empty response received from notification service",HttpStatus.INTERNAL_SERVER_ERROR);
+	public static final ExceptionCode TXNS_NTFS_SERVICE_EXCEPTION = new ExceptionCode("TXNS500", "TXNS_NTFS_SERVICE_EXCEPTION", "Error {0}:{1} Received from notification service. ", HttpStatus.INTERNAL_SERVER_ERROR);
+
 	
 	//Client Input Error Series 
 	public static final ExceptionCode TXNS_INVALID_INPUT = new ExceptionCode("TXNS4001", "TXN_INVALID_INPUT", "Missing or invalid request parameters",HttpStatus.BAD_REQUEST);
