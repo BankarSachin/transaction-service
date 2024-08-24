@@ -11,11 +11,12 @@ import com.smartbank.transactionservice.enums.TransactionStatus;
 public class TransactionMapper {
 
 	public static Transaction toEntity(TransactionRequest transactionRequest) {
-		Transaction transaction = new Transaction();
-		transaction.setTransactionDate(transactionRequest.getTransactionDate());
-		transaction.setTransactionStatus(TransactionStatus.SUCCESS);
-		transaction.setTransactionSummary(transactionRequest.getTransactionSummary());
-		return transaction;
+		
+		return Transaction.builder()
+				.transactionDate(transactionRequest.getTransactionDate())
+				.transactionStatus(TransactionStatus.SUCCESS)
+				.transactionSummary(transactionRequest.getTransactionSummary())
+				.build();
 	}
 
 	public static TransactionResponse toResponse(Transaction transaction, TransactionEntry transactionEntry) {

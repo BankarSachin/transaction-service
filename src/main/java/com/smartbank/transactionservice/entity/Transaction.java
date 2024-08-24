@@ -20,11 +20,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name = "transactions")
 @Data
+@Builder
 public class Transaction {
 
 	@Id

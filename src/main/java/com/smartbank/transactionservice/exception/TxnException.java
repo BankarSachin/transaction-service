@@ -25,7 +25,7 @@ public class TxnException extends Exception{
 		this.errorStackTrace = new ErrorStackTrace(this);
 	}
 	
-	public TxnException(ExceptionCode exceptionCode,String[] codeArgs) {
+	public TxnException(ExceptionCode exceptionCode,String...codeArgs) {
 		super(exceptionCode.toString(codeArgs));
 		this.exceptionCode = exceptionCode;
 		this.codeArgs = codeArgs;

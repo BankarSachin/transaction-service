@@ -36,6 +36,6 @@ public interface TransactionService {
 	 * @return
 	 * @throws TxnException
 	 */
-	TransactionResponse performTransfer(TransferRequest transferRequest) throws TxnException;
+	TransactionResponse performTransfer(String accountNumber,TransferRequest transferRequest) throws TxnException;
 	
 }

@@ -82,4 +82,12 @@ public class ExceptionCode implements Serializable{
 	public static final ExceptionCode TXNS_JWT_ERROR = new ExceptionCode("TXNS4003", "TXN_JWT_ERROR", "Authentication failed.{0}",HttpStatus.UNAUTHORIZED);
 	public static final ExceptionCode TXNS_AUTHZ_ERROR = new ExceptionCode("TXNS4005", "TXN_AUTHZ_ERROR", "Autheorization error",HttpStatus.FORBIDDEN);
 
+	public static final ExceptionCode TXNS_SRC_ACCOUNT_NON_EXISTS = new ExceptionCode("TXNS4006", "TXNS_SRC_ACCOUNT_NON_EXISTS", "Debir Account {0} does not exists",HttpStatus.BAD_REQUEST);
+	public static final ExceptionCode TXNS_SRC_ACCOUNT_NON_ACTIVE = new ExceptionCode("TXNS4007", "TXNS_SRC_ACCOUNT_NON_ACTIVE", "Debit Account {0} is not Active",HttpStatus.BAD_REQUEST);
+	
+	public static final ExceptionCode TXNS_DEST_ACCOUNT_NON_EXISTS = new ExceptionCode("TXNS4008", "TXNS_DEST_ACCOUNT_NON_EXISTS", "Credit Account {0} does not exists",HttpStatus.BAD_REQUEST);
+	public static final ExceptionCode TXNS_DEST_ACCOUNT_NON_ACTIVE = new ExceptionCode("TXNS4009", "TXNS_DEST_ACCOUNT_NON_ACTIVE", "Credit Account {0} is not Active",HttpStatus.BAD_REQUEST);
+
+	public static final ExceptionCode ACCS_INSUFFICIENT_BALANCE_EXCEPTION = new ExceptionCode("TXNS4010", "ACCS_INSUFFICIENT_BALANCE_EXCEPTION", "Debit Account {0} has insuffitient balance",HttpStatus.BAD_REQUEST);
+
 }
