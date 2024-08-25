@@ -36,7 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TransferServiceImpl implements TransferService{
 
-
 	@Autowired
 	private TransactionRepository transactionRepository;
 	
@@ -45,7 +44,6 @@ public class TransferServiceImpl implements TransferService{
 	
 	@Autowired
 	private AccountRepository accountRepository;
-	
 	
 	@Autowired
 	private NotificationServiceClient notificationServiceClient;
@@ -78,15 +76,15 @@ public class TransferServiceImpl implements TransferService{
 				debitAccount.setCurrentBalance(debitAccount.getCurrentBalance().subtract(ammount));
 				creditAccount.setCurrentBalance(creditAccount.getCurrentBalance().add(ammount));
 				
-				List<Account> accounts = accountRepository.saveAll(List.of(debitAccount,creditAccount));
+				debitAccount = accountRepository.save(debitAccount);
+				creditAccount = accountRepository.save(creditAccount);
 				
 				log.info("{} - Source account debited and Destination account credited",methodName);
 				
-				Transaction transaction = Transaction.builder()
-										   .transactionStatus(TransactionStatus.SUCCESS)
-										   .transactionDate(accounts.get(0).getUpdateddDate())
-										   .transactionSummary(transferRequest.getTransactionSummary())
-										   .build();
+				Transaction transaction = new Transaction();
+				transaction.setTransactionStatus(TransactionStatus.SUCCESS);
+				transaction.setTransactionDate(debitAccount.getUpdateddDate());
+				transaction.setTransactionSummary(transferRequest.getTransactionSummary());
 				
 				transaction = transactionRepository.save(transaction);
 				
@@ -106,8 +104,11 @@ public class TransferServiceImpl implements TransferService{
 				sendNotification(headers,transaction,debitAccount,creditAccount,transferRequest);
 				return txnResult;
 				
+		} catch (TxnException e) {
+			log.error("{} - Transaction Error observerd during fund transfer {}", methodName,e.getMessage());
+			throw e;
 		} catch (Exception e) {
-			log.error("{} - Unknown Error observerd during transaction entry creation {}", methodName,e.getMessage());
+			log.error("{} - Unknown Error observerd during fund transfe {}", methodName,e.getMessage());
 			throw new TxnException(ExceptionCode.TXNS_UNKNOWN_EXCEPTION, e);
 		}
 	}

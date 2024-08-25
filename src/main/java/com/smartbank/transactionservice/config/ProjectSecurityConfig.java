@@ -59,6 +59,7 @@ public class ProjectSecurityConfig {
 					 			.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 					 			.requestMatchers("/v1/transactions/*/entry").hasAnyAuthority("ADMIN")
 					 			.requestMatchers("/v1/transactions/*/history").hasAnyAuthority("ADMIN")
+					 			.requestMatchers("/v1/transactions/*/transfer").hasAnyAuthority("ADMIN")
 					)
 			.exceptionHandling(exhandler -> exhandler.authenticationEntryPoint(globalAuthenticationEntryPoint))
 			.httpBasic(Customizer.withDefaults())

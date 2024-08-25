@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.smartbank.transactionservice.constant.SysConstant;
 import com.smartbank.transactionservice.dto.TransactionRequest;
 import com.smartbank.transactionservice.dto.TransactionResponse;
 import com.smartbank.transactionservice.dto.TransferRequest;
@@ -44,11 +46,12 @@ public class TransactionController {
 	 * @throws TxnException
 	 */
 	@PostMapping(value="/transactions/{accountnumber}/entry",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TransactionResponse> entry(final @PathVariable( value = "accountnumber",required = true) String accountNumber,
+	public ResponseEntity<TransactionResponse> entry(@RequestHeader Map<String, String> headers,final @PathVariable( value = "accountnumber",required = true) String accountNumber,
 													 final @Valid @RequestBody TransactionRequest transactionRequest) throws TxnException{
 		final TransactionResponse txnResponse =  transactionService.entry(accountNumber,transactionRequest);
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
+				.header(SysConstant.SYS_REQ_CORR_ID_HEADER, headers.get(SysConstant.SYS_REQ_CORR_ID_HEADER.toLowerCase()))
 				.body(txnResponse);
 	}
 	
@@ -64,6 +67,7 @@ public class TransactionController {
 	 */
 	@GetMapping(value="/transactions/{accountnumber}/history",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TransactionResponse>> history (
+			@RequestHeader Map<String, String> headers,
 			final @PathVariable(value ="accountnumber",required = true) String accountNumber,
 	        @RequestParam(value = "startDate", required = false) LocalDate startDate,
 	        @RequestParam(value = "endDate", required = false) LocalDate endDate,
@@ -76,6 +80,7 @@ public class TransactionController {
 																					  );
 		return ResponseEntity
 				.status(HttpStatus.OK)
+				.header(SysConstant.SYS_REQ_CORR_ID_HEADER, headers.get(SysConstant.SYS_REQ_CORR_ID_HEADER.toLowerCase()))
 				.body(txnResponse);
 	}
 	
@@ -87,12 +92,13 @@ public class TransactionController {
 	 * @throws TxnException
 	 */
 	@PostMapping(value="/transactions/{accountnumber}/transfer",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<TransactionResponse>> transfer(Map<String, String> headers,
+	public ResponseEntity<List<TransactionResponse>> transfer(@RequestHeader Map<String, String> headers,
 				final @PathVariable(value = "accountnumber",required = true) String accountNumber,
 				final @Valid @RequestBody TransferRequest transferRequest) throws TxnException{
 		final List<TransactionResponse> transactionResponse = transferService.performTransfer(headers,accountNumber,transferRequest);
 		return ResponseEntity
 				.status(HttpStatus.OK)
+				.header(SysConstant.SYS_REQ_CORR_ID_HEADER, headers.get(SysConstant.SYS_REQ_CORR_ID_HEADER))
 				.body(transactionResponse);
 	}
 }
