@@ -31,18 +31,20 @@ public class TransactionMapper {
 		return transactionResponse;
 	}
 
-	public static final Function<Transaction, TransactionResponse> txnResponseMapper = t -> {
+	public static final Function<TransactionEntry, TransactionResponse> txnResponseMapper = transactionEntry -> {
 		TransactionResponse transactionResponse = new TransactionResponse();
-		transactionResponse.setUtrNumber(t.getUtrNumber());
-		transactionResponse.setTransactionDate(t.getTransactionDate());
-		transactionResponse.setTransactionDescription(t.getTransactionSummary());
-		TransactionEntry transactionEntry = t.getTransactionEntries().get(0);
-		transactionResponse.setTransactionType(transactionEntry.getTransactionType());
+		
+		transactionResponse.setUtrNumber(transactionEntry.getUtrNumber());
 		transactionResponse.setTransactionAccount(transactionEntry.getAccountNumber());
 		transactionResponse.setTransactionAmount(transactionEntry.getTransactionAmount());
+		transactionResponse.setTransactionType(transactionEntry.getTransactionType());
+		
+		Transaction txn = transactionEntry.getTransaction();
+		transactionResponse.setTransactionDate(txn.getTransactionDate());
+		transactionResponse.setTransactionDescription(txn.getTransactionSummary());
 		transactionResponse.setClosingBalance(transactionEntry.getClosingBalance());
-		transactionResponse.setTransactionStatus(t.getTransactionStatus());
-		transactionResponse.setTransactionDescription(t.getTransactionSummary());
+		transactionResponse.setTransactionStatus(txn.getTransactionStatus());
+		transactionResponse.setTransactionDescription(txn.getTransactionSummary());
 		return transactionResponse;
 	};
 }

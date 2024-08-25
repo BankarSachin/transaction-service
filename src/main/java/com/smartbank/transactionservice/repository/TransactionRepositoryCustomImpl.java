@@ -29,36 +29,36 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
      * @param transactionType type of transaction needs to be fetched
      */
     @Override
-    public List<Transaction> findTransactionsByCriteria(String accountNumber, LocalDate startDate, LocalDate endDate, TransactionType transactionType) {
+    public List<TransactionEntry> findTransactionsByCriteria(String accountNumber, LocalDate startDate, LocalDate endDate, TransactionType transactionType) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Transaction> cq = cb.createQuery(Transaction.class);
-        Root<Transaction> transactionRoot = cq.from(Transaction.class);
-        Join<Transaction, TransactionEntry> transactionEntryJoin = transactionRoot.join("transactionEntries");
+        CriteriaQuery<TransactionEntry> cq = cb.createQuery(TransactionEntry.class);
+        Root<TransactionEntry> transactionEntryRoot = cq.from(TransactionEntry.class);
+        Join<TransactionEntry,Transaction> transactionJoin = transactionEntryRoot.join("transaction");
         
 
         List<Predicate> predicates = new ArrayList<>();
 
         // Mandatory predicate: account number
-        predicates.add(cb.equal(transactionEntryJoin.get("accountNumber"), accountNumber));
+        predicates.add(cb.equal(transactionEntryRoot.get("accountNumber"), accountNumber));
 
         // Optional: start date
         if (startDate != null) {
-            predicates.add(cb.greaterThanOrEqualTo(transactionRoot.get("transactionDate"), startDate.atStartOfDay()));
+            predicates.add(cb.greaterThanOrEqualTo(transactionJoin.get("transactionDate"), startDate.atStartOfDay()));
         }
 
         // Optional: end date
         if (endDate != null) {
-            predicates.add(cb.lessThanOrEqualTo(transactionRoot.get("transactionDate"), endDate.atTime(23, 59, 59)));
+            predicates.add(cb.lessThanOrEqualTo(transactionJoin.get("transactionDate"), endDate.atTime(23, 59, 59)));
         }
 
         // Optional: transaction type
         if (transactionType != null) {
-            predicates.add(cb.equal(transactionEntryJoin.get("transactionType"), transactionType));
+            predicates.add(cb.equal(transactionEntryRoot.get("transactionType"), transactionType));
         }
 
         cq.where(predicates.toArray(new Predicate[0]));
 
-        TypedQuery<Transaction> query = entityManager.createQuery(cq);
+        TypedQuery<TransactionEntry> query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 }

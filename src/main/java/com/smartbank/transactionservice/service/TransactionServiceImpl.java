@@ -60,7 +60,7 @@ public class TransactionServiceImpl implements TransactionService{
 			TransactionType transactionType) throws TxnException {
 		final String methodName = "getTxHistory";
 		try {
-				List<Transaction> transactions =  transactionRepository.findTransactionsByCriteria(accountNumber, 
+				List<TransactionEntry> transactions =  transactionRepository.findTransactionsByCriteria(accountNumber, 
 																								   startDate, 
 																								   endDate, 
 																								   transactionType
