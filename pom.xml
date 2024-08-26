@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.smartbank.transactionservice</groupId>
 	<artifactId>transaction-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>transaction-service</name>
 	<description>Handle financial transactions, deposits, withdrawals, transfers,transaction history</description>
 	
